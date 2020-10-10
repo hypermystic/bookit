@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
-import ReactDOM, { unmountComponentAtNode } from "react-dom";
+import React, { useState, useEffect } from 'react';
+import { useHistory } from 'react-router-dom';
+import ReactDOM, { unmountComponentAtNode } from 'react-dom';
 import {
   Layout,
   Divider,
@@ -13,26 +13,15 @@ import {
   Alert,
   Avatar,
   Tooltip,
-} from "antd";
+} from 'antd';
+import { CarryOutOutlined, PlusOutlined, FileAddOutlined, SaveOutlined } from '@ant-design/icons';
 
 import Editor from 'react-medium-editor';
+import { auth, db } from './firebaseConfig';
+import { v4 as uuidv4 } from 'uuid';
 
-import "antd/dist/antd.css";
-
-import { auth, db } from "./firebaseConfig";
-import { v4 as uuidv4 } from "uuid";
-
-import "./App.css";
-
-import {
-  CarryOutOutlined,
-  PlusOutlined,
-  FileAddOutlined,
-  SaveOutlined,
-} from "@ant-design/icons";
-
-
-
+import './App.css';
+import 'antd/dist/antd.css';
 
 const { Sider, Header } = Layout;
 const { DirectoryTree } = Tree;
@@ -42,36 +31,36 @@ const treeArr = [];
 
 const editorOptions = {
   placeholder: {
-    text: "Start your Chapter from here...",
+    text: 'Start your Chapter from here...',
     hideOnClick: true,
   },
   toolbar: {
     allowMultiParagraphSelection: true,
     buttons: [
-      "bold",
-      "italic",
-      "underline",
-      "anchor",
-      "h2",
-      "h3",
-      "quote",
-      "strikethrough",
-      "unorderedlist",
-      "orderedlist",
-      "pre",
+      'bold',
+      'italic',
+      'underline',
+      'anchor',
+      'h2',
+      'h3',
+      'quote',
+      'strikethrough',
+      'unorderedlist',
+      'orderedlist',
+      'pre',
     ],
     diffLeft: 0,
     diffTop: -10,
-    firstButtonClass: "medium-editor-button-first",
-    lastButtonClass: "medium-editor-button-last",
+    firstButtonClass: 'medium-editor-button-first',
+    lastButtonClass: 'medium-editor-button-last',
     relativeContainer: null,
     standardizeSelectionStart: false,
     static: false,
-    align: "center",
+    align: 'center',
     sticky: false,
     updateOnEmptySelection: false,
   },
-}
+};
 
 // Function Starts here
 
@@ -84,14 +73,14 @@ function App() {
 
   const [treeData, setTreeData] = useState([]);
 
-  const [currentFile, setCurrentFile] = useState("");
-  const [currentFolder, setCurrentFolder] = useState("");
+  const [currentFile, setCurrentFile] = useState('');
+  const [currentFolder, setCurrentFolder] = useState('');
 
   const [fileContent, setFileContent] = useState('');
 
-  const [currentBook, setCurrentBook] = useState({key: '', isLeaf: false});
+  const [currentBook, setCurrentBook] = useState({ key: '', isLeaf: false });
 
-  const [alert, setAlert] = useState({message: null, type: null, show: false});
+  const [alert, setAlert] = useState({ message: null, type: null, show: false });
 
   // Function loading the File structure on the first reload
 
@@ -119,7 +108,7 @@ function App() {
         setCurrentUser(authUser);
         loadFileStructure(authUser);
       } else {
-        window.location.replace("https://todo-7e79c.web.app/signup");
+        window.location.replace('https://todo-7e79c.web.app/signup');
       }
     });
     return () => {
@@ -128,24 +117,22 @@ function App() {
   }, []);
 
   useEffect(() => {
+    const queryString = window.location.search;
 
-        const queryString = window.location.search;
-
-        const urlParams = new URLSearchParams(queryString);
-        const key = urlParams.get('key')
-        if(key != null)
-        db.collection('content').doc(key)
+    const urlParams = new URLSearchParams(queryString);
+    const key = urlParams.get('key');
+    if (key != null)
+      db.collection('content')
+        .doc(key)
         .get()
         .then((doc) => {
-          if(doc.exists){
+          if (doc.exists) {
             setFileContent(doc.data().content);
-          }else{
-
+          } else {
             setFileContent('');
           }
         });
-
-  }, [window.location.search])
+  }, [window.location.search]);
 
   // Function related to the right drawer
 
@@ -158,7 +145,6 @@ function App() {
   };
 
   const onFormFinish = (values) => {
-
     let uid = uuidv4();
 
     let obj = { title: values.bookname, key: uid, children: [] };
@@ -166,7 +152,7 @@ function App() {
     db.collection(currentUser.email)
       .add({
         name: values.bookname,
-        description: values.bookdesc ? values.bookdesc : "",
+        description: values.bookdesc ? values.bookdesc : '',
         children: [],
         uid: uid,
       })
@@ -179,22 +165,18 @@ function App() {
         setDrawerVisible(false);
       })
       .catch((e) => {
-        console.log("Something happend", e);
+        console.log('Something happend', e);
       });
   };
 
   // Function related to the tree structure
 
   const onSelect = (keys, event) => {
-
-
     if (!event.node.isLeaf) {
-
-      setCurrentBook({key: keys[0], isLeaf: false});
+      setCurrentBook({ key: keys[0], isLeaf: false });
 
       const addFolderDrawer = (e) => {
-
-        var file = prompt("Please Enter the file name");
+        var file = prompt('Please Enter the file name');
         if (file != null) {
           const updateFolderData = (data, id) => {
             let tempFile = [...data.children];
@@ -211,7 +193,7 @@ function App() {
           };
 
           db.collection(currentUser.email)
-            .where("uid", "==", keys[0])
+            .where('uid', '==', keys[0])
             .get()
             .then(function (querySnapshot) {
               querySnapshot.forEach(function (doc) {
@@ -219,14 +201,14 @@ function App() {
               });
             })
             .catch(function (error) {
-              console.log("Error getting documents: ", error);
+              console.log('Error getting documents: ', error);
             });
         }
       };
 
       const fileBtn = (
         <Button
-          style={{ marginTop: "10px", width: "90%" }}
+          style={{ marginTop: '10px', width: '90%' }}
           value={keys}
           icon={<FileAddOutlined />}
           onClick={addFolderDrawer}
@@ -234,11 +216,11 @@ function App() {
           Create File
         </Button>
       );
-      ReactDOM.render(fileBtn, document.getElementById("fileBtn"));
+      ReactDOM.render(fileBtn, document.getElementById('fileBtn'));
     } else {
-      history.push('/?key='+keys[0]);
-      setCurrentBook({key: event.node.key, isLeaf: true});
-      unmountComponentAtNode(document.getElementById("fileBtn"));
+      history.push('/?key=' + keys[0]);
+      setCurrentBook({ key: event.node.key, isLeaf: true });
+      unmountComponentAtNode(document.getElementById('fileBtn'));
       setCurrentFile(event.node.title);
 
       // let editor = new MediumEditor(".editable", editorOptions);
@@ -249,19 +231,18 @@ function App() {
   };
 
   const saveFileContent = () => {
-
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const key = urlParams.get('key')
+    const key = urlParams.get('key');
     db.collection('content').doc(key).set({
-      content: fileContent
-    })
-    setAlert({type: 'success', message: 'Saved Successfully', show: true});
-  }
+      content: fileContent,
+    });
+    setAlert({ type: 'success', message: 'Saved Successfully', show: true });
+  };
 
   const onExpand = (keys, event) => {
     if (currentFolder !== event.node.title) {
-      setCurrentFile("");
+      setCurrentFile('');
       setCurrentFolder(event.node.title);
     }
   };
@@ -269,43 +250,45 @@ function App() {
   const downloadPdf = () => {
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
-    const key = urlParams.get('key')
-    db.collection('content').doc(key).get().then((doc)=>{
-      if (doc.exists) {
-          console.log("Document data:", doc.data());
-        
-      } else {
+    const key = urlParams.get('key');
+    db.collection('content')
+      .doc(key)
+      .get()
+      .then((doc) => {
+        if (doc.exists) {
+          console.log('Document data:', doc.data());
+        } else {
           // doc.data() will be undefined in this case
-          console.log("No such document!");
-      }
-    }).catch(function(error) {
-        console.log("Error getting document:", error);
-    })
-    
-  }
+          console.log('No such document!');
+        }
+      })
+      .catch(function (error) {
+        console.log('Error getting document:', error);
+      });
+  };
 
   // body for the drawer
 
   const body = (
-    <Form name="basic" layout="vertical" onFinish={onFormFinish}>
+    <Form name='basic' layout='vertical' onFinish={onFormFinish}>
       <Form.Item
-        label="Book Name"
-        name="bookname"
-        rules={[{ required: true, message: "Please enter the book name" }]}
+        label='Book Name'
+        name='bookname'
+        rules={[{ required: true, message: 'Please enter the book name' }]}
       >
-        <Input style={{ width: "90%", height: "45px" }} />
+        <Input style={{ width: '90%', height: '45px' }} />
       </Form.Item>
 
       <Form.Item
-        label="Book Description"
-        name="bookdesc"
-        rules={[{ required: false, message: "Enter description for the book" }]}
+        label='Book Description'
+        name='bookdesc'
+        rules={[{ required: false, message: 'Enter description for the book' }]}
       >
-        <TextArea rows={8} style={{ width: "90%" }} />
+        <TextArea rows={8} style={{ width: '90%' }} />
       </Form.Item>
 
       <Form.Item>
-        <Button type="primary" htmlType="submit">
+        <Button type='primary' htmlType='submit'>
           Submit
         </Button>
       </Form.Item>
@@ -315,70 +298,76 @@ function App() {
   // Main App Structure
 
   return (
-    <div className="app__container">
+    <div className='app__container'>
       <Drawer
         width={500}
-        placement="right"
+        placement='right'
         closable={false}
         onClose={onClose}
         visible={drawerVisible}
       >
         {body}
       </Drawer>
-      <Layout style={{ height: "100%" }}>
-        <Sider style={{ backgroundColor: "#F6F9FC" }}>
+      <Layout style={{ height: '100%' }}>
+        <Sider style={{ backgroundColor: '#F6F9FC' }}>
           <div
             style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-evenly",
-              cursor: "pointer"
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-evenly',
+              cursor: 'pointer',
             }}
-            onClick={() => {window.location.href = "http://" + window.location.host + "/profile";}}
+            onClick={() => {
+              window.location.href = 'http://' + window.location.host + '/profile';
+              console.log(window.location.host);
+            }}
+            onClick={() => {
+              window.location.href = 'http://' + window.location.host + '/profile';
+            }}
           >
             <Avatar
               size={40}
-              src={auth.currentUser ? auth.currentUser.photoURL : ""}
-              style={{ marginBottom: "10px", marginTop: "10px" }}
+              src={auth.currentUser ? auth.currentUser.photoURL : ''}
+              style={{ marginBottom: '10px', marginTop: '10px' }}
             />
             <p
               style={{
-                alignItems: "center",
-                marginTop: "13px",
-                color: "#959698",
-                fontWeight: "bolder",
-                fontSize: "15px",
+                alignItems: 'center',
+                marginTop: '13px',
+                color: '#959698',
+                fontWeight: 'bolder',
+                fontSize: '15px',
               }}
             >
-              {auth.currentUser ? auth.currentUser.displayName : "Writer"}
+              {auth.currentUser ? auth.currentUser.displayName : 'Writer'}
             </p>
           </div>
           <Divider
-            className="app__sider__divider"
-            style={{ marginBottom: "24px", marginTop: "0px" }}
+            className='app__sider__divider'
+            style={{ marginBottom: '24px', marginTop: '0px' }}
           />
-          <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
             <p
               style={{
-                letterSpacing: "2px",
-                color: "#959698",
-                fontWeight: "bolder",
-                fontSize: "13px",
-                marginLeft: "10%",
+                letterSpacing: '2px',
+                color: '#959698',
+                fontWeight: 'bolder',
+                fontSize: '13px',
+                marginLeft: '10%',
               }}
             >
               Books
             </p>
-            <Tooltip placement="topLeft" title="New Book">
+            <Tooltip placement='topLeft' title='New Book'>
               <Button
-                size="small"
+                size='small'
                 icon={<PlusOutlined />}
                 onClick={showDrawer}
-                style={{ backgroundColor: "transparent", marginRight: "10%" }}
+                style={{ backgroundColor: 'transparent', marginRight: '10%' }}
               ></Button>
             </Tooltip>
           </div>
-          <div style={{ width: "100%", align: "center" }}>
+          <div style={{ width: '100%', align: 'center' }}>
             <DirectoryTree
               multiple
               defaultExpandAll
@@ -386,80 +375,91 @@ function App() {
               onSelect={onSelect}
               onExpand={onExpand}
               treeData={treeData}
-              className="app__tree"
+              className='app__tree'
             />
           </div>
         </Sider>
-        <Layout id="main_EDITOR" style={{ backgroundColor: "white" }}>
-          <Header style={{ height: "35px", backgroundColor: "white" }}>
+        <Layout id='main_EDITOR' style={{ backgroundColor: 'white' }}>
+          <Header style={{ height: '35px', backgroundColor: 'white' }}>
             <Breadcrumb
               style={{
-                marginTop: "13px",
-                marginLeft: "10px",
-                marginBottom: "13px",
+                marginTop: '13px',
+                marginLeft: '10px',
+                marginBottom: '13px',
               }}
             >
               <Breadcrumb.Item>You are editing</Breadcrumb.Item>
-              {currentFolder !== "" ? (
-                <Breadcrumb.Item>{currentFolder}</Breadcrumb.Item>
-              ) : (
-                ""
-              )}
-              {currentFile !== "" ? (
-                <Breadcrumb.Item>{currentFile}</Breadcrumb.Item>
-              ) : (
-                ""
-              )}
+              {currentFolder !== '' ? <Breadcrumb.Item>{currentFolder}</Breadcrumb.Item> : ''}
+              {currentFile !== '' ? <Breadcrumb.Item>{currentFile}</Breadcrumb.Item> : ''}
             </Breadcrumb>
           </Header>
-          {currentBook.isLeaf?(<Editor 
-            style={{
-              width: "100%",
-              height: "98vh",
-              marginTop: "10px",
-              outline: 0,
-              paddingTop: "100px",
-              paddingLeft: "100px",
-              paddingRight: "100px",
-              fontSize: "20px",
-              overflow: "scroll",
-            }}
-            text={fileContent}
-            onChange={(e) => {setFileContent(e);}}
-            options={editorOptions}
-          />):''}
-          
+          {currentBook.isLeaf ? (
+            <Editor
+              style={{
+                width: '100%',
+                height: '98vh',
+                marginTop: '10px',
+                outline: 0,
+                paddingTop: '100px',
+                paddingLeft: '100px',
+                paddingRight: '100px',
+                fontSize: '20px',
+                overflow: 'scroll',
+              }}
+              text={fileContent}
+              onChange={(e) => {
+                setFileContent(e);
+              }}
+              options={editorOptions}
+            />
+          ) : (
+            ''
+          )}
         </Layout>
-        <Sider style={{ backgroundColor: "#F6F9FC", textAlign: "center" }}>
-          <div id="fileBtn"></div>
-          <div id="saveBtn">
-            {currentBook.isLeaf?(<Button
-              type="primary"
-              style={{ marginTop: "10px", width: "90%" }}
-              icon={<SaveOutlined />}
-              onClick={saveFileContent}
-            >
-            Save File
-          </Button>): ''}
+        <Sider style={{ backgroundColor: '#F6F9FC', textAlign: 'center' }}>
+          <div id='fileBtn'></div>
+          <div id='saveBtn'>
+            {currentBook.isLeaf ? (
+              <Button
+                type='primary'
+                style={{ marginTop: '10px', width: '90%' }}
+                icon={<SaveOutlined />}
+                onClick={saveFileContent}
+              >
+                Save File
+              </Button>
+            ) : (
+              ''
+            )}
           </div>
-          <div id="showAlert">
-          {alert.show?(<Alert
-            style={{
-              position: "absolute",
-              top: "10px",
-              right: "500px",
-              width: "200px",
-            }}
-            message={alert.message}
-            type={alert.type}
-            showIcon
-            closable
-            afterClose={() => setAlert({type: 'success', message: 'Saved Successfully', show: false})}
-          />):''}
+          <div id='showAlert'>
+            {alert.show ? (
+              <Alert
+                style={{
+                  position: 'absolute',
+                  top: '10px',
+                  right: '500px',
+                  width: '200px',
+                }}
+                message={alert.message}
+                type={alert.type}
+                showIcon
+                closable
+                afterClose={() =>
+                  setAlert({ type: 'success', message: 'Saved Successfully', show: false })
+                }
+              />
+            ) : (
+              ''
+            )}
           </div>
-          {
-            currentBook.isLeaf?(<Button style={{ marginTop: "10px", width: "90%" }} onClick={downloadPdf}>Download File</Button>):''
-          }
+          {currentBook.isLeaf ? (
+            <Button style={{ marginTop: '10px', width: '90%' }} onClick={downloadPdf}>
+              Download File
+            </Button>
+          ) : (
+            ''
+          )}
         </Sider>
       </Layout>
     </div>

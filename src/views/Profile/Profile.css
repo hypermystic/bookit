@@ -1,0 +1,14 @@
+.book_title {
+  display: flex;
+  width: 150px;
+  height: 150px;
+  border: '1px solid lightgray';
+  margin: '5px';
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.font_size {
+  font-size: 70px;
+}
