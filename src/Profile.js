@@ -23,7 +23,7 @@ function Profile() {
     };
 
     const loadBooksData = (authUser) => {
-        console.log(books);
+
         db.collection(authUser.email)
         .get()
         .then(function (querySnapshot) {
@@ -41,7 +41,6 @@ function Profile() {
         const unsubscribe = auth.onAuthStateChanged((authUser) => {
           if (authUser) {
             
-            console.log(auth.currentUser);
             setCurrentUser(authUser);
             loadBooksData(authUser);
 

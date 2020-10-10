@@ -116,7 +116,6 @@ function App() {
     const unsubscribe = auth.onAuthStateChanged((authUser) => {
       if (authUser) {
         // logged in
-        console.log(auth.currentUser);
         setCurrentUser(authUser);
         loadFileStructure(authUser);
       } else {
@@ -131,7 +130,7 @@ function App() {
   useEffect(() => {
 
         const queryString = window.location.search;
-        console.log(queryString);
+
         const urlParams = new URLSearchParams(queryString);
         const key = urlParams.get('key')
         if(key != null)
@@ -159,7 +158,7 @@ function App() {
   };
 
   const onFormFinish = (values) => {
-    console.log(values);
+
     let uid = uuidv4();
 
     let obj = { title: values.bookname, key: uid, children: [] };
@@ -187,14 +186,13 @@ function App() {
   // Function related to the tree structure
 
   const onSelect = (keys, event) => {
-    //console.log(keys, event);
+
 
     if (!event.node.isLeaf) {
 
       setCurrentBook({key: keys[0], isLeaf: false});
 
       const addFolderDrawer = (e) => {
-        console.log(keys);
 
         var file = prompt("Please Enter the file name");
         if (file != null) {
@@ -251,7 +249,7 @@ function App() {
   };
 
   const saveFileContent = () => {
-    console.log(fileContent);
+
     const queryString = window.location.search;
     const urlParams = new URLSearchParams(queryString);
     const key = urlParams.get('key')
@@ -336,7 +334,7 @@ function App() {
               justifyContent: "space-evenly",
               cursor: "pointer"
             }}
-            onClick={() => {window.location.href = "http://" + window.location.host + "/profile"; console.log(window.location.host)}}
+            onClick={() => {window.location.href = "http://" + window.location.host + "/profile";}}
           >
             <Avatar
               size={40}
@@ -427,7 +425,7 @@ function App() {
               overflow: "scroll",
             }}
             text={fileContent}
-            onChange={(e) => {setFileContent(e);console.log(fileContent);}}
+            onChange={(e) => {setFileContent(e);}}
             options={editorOptions}
           />):''}
           
