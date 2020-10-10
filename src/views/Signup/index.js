@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { auth, signInWithGoogle } from 'firebaseConfig';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Route } from 'react-router-dom';
 
 import { GoogleOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
@@ -34,7 +34,7 @@ class Signup extends React.Component {
     return (
       <div className='signin__btn'>
         {this.state.currentUser ? (
-          <Redirect to='/' />
+          <Redirect to="/" />
         ) : (
           <Button size='middle' onClick={signInWithGoogle} icon={<GoogleOutlined />}>
             Sign In

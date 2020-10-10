@@ -10,11 +10,6 @@
   height: 0.1px;
 }
 
-.app__tree {
-  background-color: transparent;
-  color: 'ivory' !important;
-}
-
 .medium-toolbar-arrow-under:after {
   border-color: #000 transparent transparent transparent;
   top: 40px;

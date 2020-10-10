@@ -108,7 +108,7 @@ function App() {
         setCurrentUser(authUser);
         loadFileStructure(authUser);
       } else {
-        window.location.replace('https://todo-7e79c.web.app/signup');
+        window.location.replace('http://localhost:3000/signup');
       }
     });
     return () => {
@@ -375,7 +375,7 @@ function App() {
               onSelect={onSelect}
               onExpand={onExpand}
               treeData={treeData}
-              className='app__tree'
+              style={{backgroundColor: '#F6F9FC'}}
             />
           </div>
         </Sider>
