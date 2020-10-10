@@ -1,5 +1,7 @@
 #### How to run the project
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3b6a93f74bb941a1b7cc8ccbd3f3967d)](https://app.codacy.com/gh/hypermystic/bookit?utm_source=github.com&utm_medium=referral&utm_content=hypermystic/bookit&utm_campaign=Badge_Grade_Settings)
+
 - Fork or clone the repository
 - Open the root folder i.e. bookit
 - Run `npm install`
