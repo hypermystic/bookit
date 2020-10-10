@@ -236,7 +236,7 @@ function App() {
       );
       ReactDOM.render(fileBtn, document.getElementById("fileBtn"));
     } else {
-      history.push('/?key='+keys[0]);
+      history.push('/keys/?key='+keys[0]);
       setCurrentBook({key: event.node.key, isLeaf: true});
       unmountComponentAtNode(document.getElementById("fileBtn"));
       setCurrentFile(event.node.title);
