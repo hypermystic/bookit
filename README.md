@@ -4,41 +4,23 @@
 - Open the root folder i.e. bookit
 - Run `npm install`
 - Now Create a web Firebase project by visiting the firebase website.
-- Copy the firebase configs from there.
-- Create a file under `src` name it `firebaseConfig.js`
+- Create a .env file 
 
-- insert below lines of code into that file and replace the CONSTANTS with your actual ones which you have copied
+- insert below lines of code into that file.
 
 ```
-import firebase from 'firebase/app';
-import '@firebase/auth';
-import '@firebase/firestore';
-import 'firebase/analytics';
+REACT_APP_API_KEY=""
+REACT_APP_AUTH_DOMAIN="",
+REACT_APP_DATABASE_URL="",
+REACT_APP_PROJECT_ID="",
+REACT_APP_STORAGE_BUCKET="",
+REACT_APP_MESSAGING_SENDER_ID="",
+REACT_APP_APP_ID="",
+REACT_APP_MEASUREMENT_ID=""
+```
 
+Add the firebase Configs values to the above variables
 
-const firebaseConfig = {
-    apiKey: API_KEY,
-    authDomain: AUTH_DOMAIN,
-    databaseURL: DATABASE_URL,
-    projectId: PROJECT_ID,
-    storageBucket: STORAGE_BUCKET,
-    messagingSenderId: MESSAGING_SENDER_ID,
-    appId: APP_ID,
-    measurementId: MEASUREMENT_ID
-  };
+- Run `npm start` in the terminal for running on localhost:3000
 
-  firebase.initializeApp(firebaseConfig);
-  firebase.analytics();
-
-  export const auth = firebase.auth();
-  export const db = firebase.app().firestore();
-
-  const provider = new firebase.auth.GoogleAuthProvider();
-  provider.setCustomParameters({ prompt: 'select_account' });
-  export const signInWithGoogle = () => auth.signInWithPopup(provider);
-  
-  export default firebase;
-
-  ```
-
-  - Run `npm start` in the terminal
+Note: If this does not work, try removing the .env variables from the firebaseConfig and store the actual config values which you got from the firebase and then run the `npm start`

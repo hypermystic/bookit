@@ -1,6 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
+
+import App from 'App';
+import Signup from 'views/Signup';
+import Profile from 'views/Profile';
+
 import './index.css';
+
 import App from './App';
 import Signup from './Signup';
 import Profile from './Profile';
@@ -25,4 +32,4 @@ ReactDOM.render(
   document.getElementById('root')
 );
 
-
+ReactDOM.render(routing, document.getElementById('root'));
