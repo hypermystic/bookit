@@ -20,4 +20,5 @@ REACT_APP_MEASUREMENT_ID=""
 ```
 
 - Run `npm start` in the terminal for running on localhost:3000
-or you can also do firebase serve for running on localhost:5000
+
+Note: If this does not work look try removing the .env variables from the firebaseConfig and store the actual config values which you got from the firebase and then run the `npm start`
