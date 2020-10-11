@@ -241,7 +241,7 @@ function App() {
   };
 
   const onKeyDown = e => {
-    if (currentBook.isLeaf && e.ctrlKey && e.key.toLowerCase() === 's') {
+    if (currentBook.isLeaf && (window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {
       e.preventDefault();
       saveFileContent();
     }
