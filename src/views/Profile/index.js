@@ -43,7 +43,7 @@ function Profile() {
         setCurrentUser(authUser);
         loadBooksData(authUser);
       } else {
-        window.location.replace('https://todo-7e79c.web.app/signup');
+        window.location.replace('http://localhost:3000/signup');
       }
     });
     return () => {
@@ -72,7 +72,7 @@ function Profile() {
                 {book.title}
               </div>
             ))}
-            <div className='book_title font_size'>
+            <div className='book_title font_size' style={{border: '1px dashed lightgray'}}>
               <PlusOutlined style={{ color: 'darkgray' }} />
             </div>
           </div>
