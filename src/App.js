@@ -240,6 +240,13 @@ function App() {
     setAlert({ type: 'success', message: 'Saved Successfully', show: true });
   };
 
+  const onKeyDown = e => {
+    if (currentBook.isLeaf && e.ctrlKey && e.key.toLowerCase() === 's') {
+      e.preventDefault();
+      saveFileContent();
+    }
+  };
+
   const onExpand = (keys, event) => {
     if (currentFolder !== event.node.title) {
       setCurrentFile('');
@@ -298,7 +305,7 @@ function App() {
   // Main App Structure
 
   return (
-    <div className='app__container'>
+    <div className='app__container' onKeyDown={onKeyDown} tabIndex="0">
       <Drawer
         width={500}
         placement='right'
