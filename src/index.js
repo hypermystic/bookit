@@ -13,7 +13,7 @@ const routing = (
     <Route exact path="/signup" component={Signup} />
     <Route exact path="/profile" component={Profile} />
     <Route exact path="/" component={App} />
-    <Route path="/keys/?key=:id" component={App}/>
+    <Route path="/?key=:id" component={App}/>
     <Route component={Error404} />
     </Switch>
  </Router>
