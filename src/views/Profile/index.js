@@ -56,7 +56,6 @@ function Profile() {
       <Layout style={{ width: '100vw', height: '100vh' }}>
         <Sider style={{ backgroundColor: 'white', borderRight: '1px solid lightgray' }}>
           <center>
-            {console.log('auth', auth)}
             <Avatar
               size={120}
               src={auth.currentUser ? auth.currentUser.photoURL : ''}
