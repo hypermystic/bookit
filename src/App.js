@@ -14,10 +14,16 @@ import {
   Avatar,
   Tooltip,
 } from 'antd';
-import { CarryOutOutlined, PlusOutlined, FileAddOutlined, SaveOutlined } from '@ant-design/icons';
+import {
+  CarryOutOutlined,
+  PlusOutlined,
+  FileAddOutlined,
+  SaveOutlined,
+  LogoutOutlined,
+} from '@ant-design/icons';
 
 import Editor from 'react-medium-editor';
-import { auth, db } from './firebaseConfig';
+import { auth, db, signOut } from './firebaseConfig';
 import { v4 as uuidv4 } from 'uuid';
 
 import './App.css';
@@ -135,6 +141,9 @@ function App() {
   }, [window.location.search]);
 
   // Function related to the right drawer
+  const signout = () => {
+    signOut();
+  };
 
   const showDrawer = () => {
     setDrawerVisible(true);
@@ -240,8 +249,12 @@ function App() {
     setAlert({ type: 'success', message: 'Saved Successfully', show: true });
   };
 
-  const onKeyDown = e => {
-    if (currentBook.isLeaf && (window.navigator.platform.match("Mac") ? e.metaKey : e.ctrlKey)  && e.keyCode == 83) {
+  const onKeyDown = (e) => {
+    if (
+      currentBook.isLeaf &&
+      (window.navigator.platform.match('Mac') ? e.metaKey : e.ctrlKey) &&
+      e.keyCode === 83
+    ) {
       e.preventDefault();
       saveFileContent();
     }
@@ -305,7 +318,7 @@ function App() {
   // Main App Structure
 
   return (
-    <div className='app__container' onKeyDown={onKeyDown} tabIndex="0">
+    <div className='app__container' onKeyDown={onKeyDown} tabIndex='0'>
       <Drawer
         width={500}
         placement='right'
@@ -324,15 +337,11 @@ function App() {
               justifyContent: 'space-evenly',
               cursor: 'pointer',
             }}
-            onClick={() => {
-              window.location.href = 'http://' + window.location.host + '/profile';
-              console.log(window.location.host);
-            }}
-            onClick={() => {
-              window.location.href = 'http://' + window.location.host + '/profile';
-            }}
           >
             <Avatar
+              onClick={() => {
+                window.location.href = 'http://' + window.location.host + '/profile';
+              }}
               size={40}
               src={auth.currentUser ? auth.currentUser.photoURL : ''}
               style={{ marginBottom: '10px', marginTop: '10px' }}
@@ -347,6 +356,14 @@ function App() {
               }}
             >
               {auth.currentUser ? auth.currentUser.displayName : 'Writer'}
+              <Tooltip placement='topLeft' title='Logout'>
+                <Button
+                  size='small'
+                  icon={<LogoutOutlined />}
+                  onClick={signout}
+                  style={{ backgroundColor: 'transparent', marginRight: '10%' }}
+                ></Button>
+              </Tooltip>
             </p>
           </div>
           <Divider
@@ -369,7 +386,7 @@ function App() {
               <Button
                 size='small'
                 icon={<PlusOutlined />}
-                onClick={showDrawer}
+                onClick={signout}
                 style={{ backgroundColor: 'transparent', marginRight: '10%' }}
               ></Button>
             </Tooltip>
@@ -382,7 +399,7 @@ function App() {
               onSelect={onSelect}
               onExpand={onExpand}
               treeData={treeData}
-              style={{backgroundColor: '#F6F9FC'}}
+              style={{ backgroundColor: '#F6F9FC' }}
             />
           </div>
         </Sider>

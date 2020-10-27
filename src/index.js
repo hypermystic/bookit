@@ -5,10 +5,9 @@ import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 import App from 'App';
 import Signup from 'views/Signup';
 import Profile from 'views/Profile';
+import Error404 from 'views/Error404';
 
 import './index.css';
-
-import Error404 from './Error404';
 
 const routing = (
   <Router>
@@ -19,13 +18,7 @@ const routing = (
       <Route path='/?key=:id' component={App} />
       <Route component={Error404} />
     </Switch>
- </Router>
-)
-
-
-ReactDOM.render(
-  routing,
-  document.getElementById('root')
+  </Router>
 );
 
 ReactDOM.render(routing, document.getElementById('root'));
