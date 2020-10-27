@@ -1,9 +1,9 @@
 import React from 'react';
 
-import { auth, signInWithGoogle } from 'firebaseConfig';
+import { auth, signInWithGoogle, signInWithFacebook, signInWithTwitter } from 'firebaseConfig';
 import { Redirect, Route } from 'react-router-dom';
 
-import { GoogleOutlined } from '@ant-design/icons';
+import { GoogleOutlined, FacebookOutlined, TwitterOutlined } from '@ant-design/icons';
 import { Button } from 'antd';
 
 import 'antd/dist/antd.css';
@@ -34,11 +34,21 @@ class Signup extends React.Component {
     return (
       <div className='signin__btn'>
         {this.state.currentUser ? (
-          <Redirect to="/" />
+          <Redirect to='/' />
         ) : (
-          <Button size='middle' onClick={signInWithGoogle} icon={<GoogleOutlined />}>
-            Sign In
-          </Button>
+          <div className='bt_group'>
+            <Button size='middle' onClick={signInWithGoogle} icon={<GoogleOutlined />}>
+              Sign In
+            </Button>
+
+            <Button size='middle' onClick={signInWithFacebook} icon={<FacebookOutlined />}>
+              Sign In
+            </Button>
+
+            <Button size='middle' onClick={signInWithTwitter} icon={<TwitterOutlined />}>
+              Sign In
+            </Button>
+          </div>
         )}
       </div>
     );
