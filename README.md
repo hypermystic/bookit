@@ -1,7 +1,7 @@
 #### How to run the project
 
 - Fork the repository
-- Open the root folder i.e. bookit
+- Open the root folder(i.e. bookit) in any editor of your choice 
 - Run `npm install`
 - Now Create a web Firebase project by visiting the firebase website.
 - Create a .env file 
