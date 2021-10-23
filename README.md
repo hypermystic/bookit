@@ -5,7 +5,6 @@
 - Run `npm install`
 - Now Create a web Firebase project by visiting the firebase website.
 - Create a .env file 
-
 - insert below lines of code into that file.
 
 ```
