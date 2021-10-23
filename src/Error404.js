@@ -7,7 +7,7 @@ const Error404 = () => {
             <div>
                 <h1 className="error__h1">404</h1>
                 <h4 className="error__h4">Error</h4>
-                <p className="error__p">Looks Like Youv'e Got Lost</p>
+                <p className="error__p">Looks Like You've Got Lost</p>
             </div>
         </div>
     )
